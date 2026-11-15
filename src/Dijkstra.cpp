@@ -5,12 +5,16 @@
 
 #include <cassert>
 
-unsigned long long Dijkstra::run(
-    const Graph& graph,
-    MinHeap& Q,
-    std::vector<long long>& distance,
-    std::vector<int>& parent,
-    const bool counting) {
+Status Dijkstra::run(
+    const Graph &graph,
+    MinHeap &Q,
+    std::vector<long long> &distance,
+    std::vector<int> &parent,
+    unsigned long long &work,
+    const bool counting)
+{
+
+    work = 0; // D1
 
     const int vertexCount = graph.getVertexCount();
     const int source = graph.getSource();
@@ -18,57 +22,83 @@ unsigned long long Dijkstra::run(
     assert(source >= 0 && source < vertexCount);
     assert(Q.empty());
 
-    unsigned long long work = 0;                         // D1
-
-    distance.assign(vertexCount, Graph::INF_DISTANCE);   // D2
+    distance.assign(vertexCount, Graph::INF_DISTANCE); // D2
     parent.assign(vertexCount, -1);
 
-    distance[source] = 0;                                // D3
+    distance[source] = 0; // D3
     Q.insert(source, 0);
-    if (counting) {
-        work += 1;
+    if (counting)
+    {
+        if (!checkedIncrement(work))
+        {
+            Q.clear();
+            return Status::Overflow;
+        }
     }
 
-    while (!Q.empty()) {                                 // D4
+    while (!Q.empty())
+    {                                 // D4
         const int v = Q.extractMin(); // d(v) is now final.
-        if (counting) {
-            work += 1;
+        if (counting)
+        {
+            if (!checkedIncrement(work))
+            {
+                Q.clear();
+                return Status::Overflow;
+            }
         }
 
-        for (const Adjacent& adjacent : graph.neighborsOf(v)) { // D5
+        for (const Adjacent &adjacent : graph.neighborsOf(v))
+        { // D5
             // Count the edge look before any if that could skip this edge.
-            if (counting) {
-                work += 1;
+            if (counting)
+            {
+                if (!checkedIncrement(work))
+                {
+                    Q.clear();
+                    return Status::Overflow;
+                }
             }
 
             const int x = adjacent.neighbor;
             const long long weight = graph.getWeight(adjacent.edgeId);
 
-            // Avoid overflowing long long or using the infinity value as
-            // a finite candidate distance. The edge look is already counted.
-            if (weight >= Graph::INF_DISTANCE - distance[v]) {
-                continue;
+            // Stop if adding would overflow or reach the infinity sentinel.
+            // The edge look is already counted. Empty Q before returning.
+            if (weight >= Graph::INF_DISTANCE - distance[v])
+            {
+                Q.clear();
+                return Status::Overflow;
             }
 
             const long long candidate = distance[v] + weight;
 
-            if (candidate < distance[x]) {               // D6
+            if (candidate < distance[x])
+            { // D6
                 distance[x] = candidate;
                 parent[x] = v;
 
-                if (Q.contains(x)) {
+                if (Q.contains(x))
+                {
                     Q.decreaseKey(x, candidate);
-                } else {
+                }
+                else
+                {
                     Q.insert(x, candidate);
                 }
 
                 // One queue operation: either insert or decrease-key.
-                if (counting) {
-                    work += 1;
+                if (counting)
+                {
+                    if (!checkedIncrement(work))
+                    {
+                        Q.clear();
+                        return Status::Overflow;
+                    }
                 }
             }
         }
     }
 
-    return work;                                        // D7
+    return Status::Ok; // D7
 }

@@ -41,7 +41,13 @@ int main() {
 
     std::vector<long long> distance;
     std::vector<int> parent;
-    (void)Dijkstra::run(fig1, methodQ, distance, parent, false);
+    unsigned long long work = 0;
+
+    if (Dijkstra::run(fig1, methodQ, distance, parent, work, false)
+        != Status::Ok) {
+        std::cerr << "FAIL: initial fig1 Dijkstra overflowed.\n";
+        return 1;
+    }
 
     const std::vector<long long> originalDistance = distance;
     const std::vector<int> originalParent = parent;
@@ -78,7 +84,12 @@ int main() {
     }
 
     // 5. In fig3, both A and B give C the same distance of 2.
-    (void)Dijkstra::run(fig3, methodQ, distance, parent, false);
+    if (Dijkstra::run(fig3, methodQ, distance, parent, work, false)
+        != Status::Ok) {
+        std::cerr << "FAIL: fig3 Dijkstra overflowed.\n";
+        return 1;
+    }
+
     parent[3] = 2;
     if (!checkCase(5, "tied parent allowed", fig3, distance, parent,
                    referenceQ, true)) {
@@ -89,13 +100,19 @@ int main() {
     distance = originalDistance;
     parent = originalParent;
     fig1.setWeight(0, 5);
+
     if (!checkCase(6, "stale result rejected", fig1, distance, parent,
                    referenceQ, false)) {
         failures++;
     }
 
     // 7. Recompute on the updated graph, then check the exact expected output.
-    (void)Dijkstra::run(fig1, methodQ, distance, parent, false);
+    if (Dijkstra::run(fig1, methodQ, distance, parent, work, false)
+        != Status::Ok) {
+        std::cerr << "FAIL: updated fig1 Dijkstra overflowed.\n";
+        return 1;
+    }
+
     const bool accepted =
         Validator::validateOutput(fig1, distance, parent, referenceQ);
 
@@ -106,6 +123,7 @@ int main() {
 
     std::cout << (passed ? "PASS" : "FAIL")
               << " 7: recomputed fig1 result and expected numbers\n";
+
     if (!passed) {
         failures++;
     }

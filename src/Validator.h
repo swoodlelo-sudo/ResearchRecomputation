@@ -25,18 +25,20 @@
 // Parents do NOT have to match the reference. When two shortest paths tie,
 // different valid trees are allowed. With positive weights, tight parent
 // edges lead to smaller distances, so following parents cannot form a cycle.
-class Validator {
+class Validator
+{
 public:
     // Set up referenceQ for the graph's vertex count before calling.
     // It must be empty and separate from the method's Q.
-    // The graph must satisfy Dijkstra's positive-weight and distance limits.
+    // The graph must have a valid source and positive weights.
+    // A reference Dijkstra overflow is reported as a validation failure.
     // Returns true on success. Otherwise prints the first problem and
     // returns false. Both output vectors must have one entry per vertex.
     [[nodiscard]] static bool validateOutput(
-        const Graph& graph,
-        const std::vector<long long>& distance,
-        const std::vector<int>& parent,
-        MinHeap& referenceQ);
+        const Graph &graph,
+        const std::vector<long long> &distance,
+        const std::vector<int> &parent,
+        MinHeap &referenceQ);
 };
 
 #endif

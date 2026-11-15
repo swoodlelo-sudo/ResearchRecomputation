@@ -7,17 +7,20 @@
 
 Graph::Graph() : source(0) {}
 
-Graph::Graph(const int vertexCount, const int sourceVertex) {
+Graph::Graph(const int vertexCount, const int sourceVertex)
+{
     reset(vertexCount, sourceVertex);
 }
 
-void Graph::reset(const int vertexCount, const int sourceVertex) {
+void Graph::reset(const int vertexCount, const int sourceVertex)
+{
     source = sourceVertex;
     edges.clear();
     adjacency.assign(vertexCount, std::vector<Adjacent>());
 }
 
-int Graph::addEdge(const int u, const int v, const long long weight) {
+int Graph::addEdge(const int u, const int v, const long long weight)
+{
     const int edgeId = static_cast<int>(edges.size());
 
     edges.push_back(Edge{u, v, weight});
@@ -27,45 +30,56 @@ int Graph::addEdge(const int u, const int v, const long long weight) {
     return edgeId;
 }
 
-int Graph::getVertexCount() const {
+int Graph::getVertexCount() const
+{
     return static_cast<int>(adjacency.size());
 }
 
-int Graph::getEdgeCount() const {
+int Graph::getEdgeCount() const
+{
     return static_cast<int>(edges.size());
 }
 
-int Graph::getSource() const {
+int Graph::getSource() const
+{
     return source;
 }
 
-const Edge& Graph::getEdge(const int edgeId) const {
+const Edge &Graph::getEdge(const int edgeId) const
+{
     return edges[edgeId];
 }
 
-long long Graph::getWeight(const int edgeId) const {
+long long Graph::getWeight(const int edgeId) const
+{
     return edges[edgeId].weight;
 }
 
-void Graph::setWeight(const int edgeId, const long long weight) {
+void Graph::setWeight(const int edgeId, const long long weight)
+{
     edges[edgeId].weight = weight;
 }
 
-int Graph::otherEndpoint(const int edgeId, const int vertex) const {
+int Graph::otherEndpoint(const int edgeId, const int vertex) const
+{
     return edges[edgeId].u == vertex ? edges[edgeId].v : edges[edgeId].u;
 }
 
-const std::vector<Adjacent>& Graph::neighborsOf(const int vertex) const {
+const std::vector<Adjacent> &Graph::neighborsOf(const int vertex) const
+{
     return adjacency[vertex];
 }
 
-int Graph::degreeOf(const int vertex) const {
+int Graph::degreeOf(const int vertex) const
+{
     return static_cast<int>(adjacency[vertex].size());
 }
 
-bool Graph::load(const std::string& fileName) {
+bool Graph::load(const std::string &fileName)
+{
     std::ifstream in(fileName);
-    if (!in) {
+    if (!in)
+    {
         return false;
     }
 
@@ -75,35 +89,48 @@ bool Graph::load(const std::string& fileName) {
 
     // Read and check the header before resetting the graph.
     // A DIMACS file starts with text so it fails this read.
-    if (!(in >> vertexCount >> edgeCount >> sourceVertex)) {
+    if (!(in >> vertexCount >> edgeCount >> sourceVertex))
+    {
         return false;
     }
 
     // We need at least one vertex to have a valid fixed source.
     if (vertexCount <= 0 || edgeCount < 0 ||
-        sourceVertex < 0 || sourceVertex >= vertexCount) {
+        sourceVertex < 0 || sourceVertex >= vertexCount)
+    {
         return false;
     }
 
     reset(vertexCount, sourceVertex);
 
-    for (int i = 0; i < edgeCount; i++) {
+    for (int i = 0; i < edgeCount; i++)
+    {
         int u = 0;
         int v = 0;
         long long weight = 0;
 
         // Stops if an edge is missing or a value cannot be read.
-        if (!(in >> u >> v >> weight)) {
+        if (!(in >> u >> v >> weight))
+        {
             return false;
         }
 
         // This is the if statement that checks u and v while loading,
         // prevents out-of-bounds access to adjacency[u] or adjacency[v].
-        if (u < 0 || u >= vertexCount || v < 0 || v >= vertexCount) {
+        if (u < 0 || u >= vertexCount || v < 0 || v >= vertexCount)
+        {
             return false;
         }
-        
-        if (weight <= 0) {
+
+        // Our graph files must use positive edge weights.
+        if (weight <= 0)
+        {
+            return false;
+        }
+
+        // The conversion tool should have removed self-loops.
+        if (u == v)
+        {
             return false;
         }
 
@@ -113,16 +140,19 @@ bool Graph::load(const std::string& fileName) {
     return true;
 }
 
-bool Graph::save(const std::string& fileName) const {
+bool Graph::save(const std::string &fileName) const
+{
     std::ofstream out(fileName);
-    if (!out) {
+    if (!out)
+    {
         return false;
     }
 
     out << getVertexCount() << " " << getEdgeCount() << " "
         << source << "\n";
 
-    for (const Edge& edge : edges) {
+    for (const Edge &edge : edges)
+    {
         out << edge.u << " " << edge.v << " " << edge.weight << "\n";
     }
 

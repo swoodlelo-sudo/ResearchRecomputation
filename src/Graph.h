@@ -2,8 +2,8 @@
 // and accessing the graph. The function definitions are in Graph.cpp.
 // n and m come from the sizes of the adjacency vector and edge list.
 
-// This is the graph used by Dijkstra, DDFLP-D without deletion, and DDFLP-D-WL. I also use it with 
-// the BFS cut tool to get the portions of data I need. As well with creating the edge struct (u, v, weight), 
+// This is the graph used by Dijkstra, DDFLP-D without deletion, and DDFLP-D-WL. I also use it with
+// the BFS cut tool to get the portions of data I need. As well with creating the edge struct (u, v, weight),
 // an adjacency entry with two fields being neighbor and edge ID, and the graph class with the edge list,
 // vectors of adjacency entries and non pos weight.
 
@@ -18,14 +18,16 @@
 #include <vector>
 
 // 64 bit so repeated doubling has room
-struct Edge {
+struct Edge
+{
     int u;
     int v;
     long long weight;
 };
 
 // The weight of the edge is kept in the edge list not in this entry.
-struct Adjacent {
+struct Adjacent
+{
     int neighbor;
     int edgeId;
 };
@@ -39,7 +41,8 @@ struct Adjacent {
 //     first line:   n m s
 //     then m lines: u v weight
 // Each undirected edge is listed once in the file.
-class Graph {
+class Graph
+{
 private:
     int source;
     std::vector<Edge> edges;
@@ -63,7 +66,7 @@ public:
     [[nodiscard]] int getEdgeCount() const;
     [[nodiscard]] int getSource() const;
 
-    [[nodiscard]] const Edge& getEdge(int edgeId) const;
+    [[nodiscard]] const Edge &getEdge(int edgeId) const;
     [[nodiscard]] long long getWeight(int edgeId) const;
     void setWeight(int edgeId, long long weight);
 
@@ -71,14 +74,14 @@ public:
     // The given vertex must belong to this edge.
     [[nodiscard]] int otherEndpoint(int edgeId, int vertex) const;
 
-    [[nodiscard]] const std::vector<Adjacent>& neighborsOf(int vertex) const;
+    [[nodiscard]] const std::vector<Adjacent> &neighborsOf(int vertex) const;
     [[nodiscard]] int degreeOf(int vertex) const;
 
     // Returns false for an unreadable file, invalid header, incomplete edge,
-    // invalid endpoint, or non-positive weight. A failed load can leave a
-    // partially loaded graph so only use it when this returns true.
-    [[nodiscard]] bool load(const std::string& fileName);
-    [[nodiscard]] bool save(const std::string& fileName) const;
+    // invalid endpoint, non-positive weight, or self-loop. A failed load can
+    // leave a partially loaded graph; only use it when this returns true.
+    [[nodiscard]] bool load(const std::string &fileName);
+    [[nodiscard]] bool save(const std::string &fileName) const;
 };
 
 #endif

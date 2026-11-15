@@ -6,7 +6,8 @@
 #include <cassert>
 #include <utility>
 
-void MinHeap::setup(const int n) {
+void MinHeap::setup(const int n)
+{
     assert(n >= 0);
 
     heap.clear();
@@ -15,16 +16,19 @@ void MinHeap::setup(const int n) {
     key.assign(n, 0);
 }
 
-bool MinHeap::empty() const {
+bool MinHeap::empty() const
+{
     return heap.empty();
 }
 
-bool MinHeap::contains(const int v) const {
+bool MinHeap::contains(const int v) const
+{
     assert(v >= 0 && v < static_cast<int>(pos.size()));
     return pos[v] != -1;
 }
 
-void MinHeap::swapAt(const int a, const int b) {
+void MinHeap::swapAt(const int a, const int b)
+{
     std::swap(heap[a], heap[b]);
     pos[heap[a]] = a;
     pos[heap[b]] = b;
@@ -32,11 +36,14 @@ void MinHeap::swapAt(const int a, const int b) {
     // Keys stay indexed by vertex ID, so they do not need to be swapped.
 }
 
-void MinHeap::siftUp(int index) {
-    while (index > 0) {
+void MinHeap::siftUp(int index)
+{
+    while (index > 0)
+    {
         const int parent = (index - 1) / 2;
 
-        if (key[heap[parent]] <= key[heap[index]]) {
+        if (key[heap[parent]] <= key[heap[index]])
+        {
             break;
         }
 
@@ -45,22 +52,27 @@ void MinHeap::siftUp(int index) {
     }
 }
 
-void MinHeap::siftDown(int index) {
+void MinHeap::siftDown(int index)
+{
     const int size = static_cast<int>(heap.size());
 
     // Only indices before size / 2 have children.
-    while (index < size / 2) {
+    while (index < size / 2)
+    {
         const int left = 2 * index + 1;
         const int right = left + 1;
         int smallest = index;
 
-        if (key[heap[left]] < key[heap[smallest]]) {
+        if (key[heap[left]] < key[heap[smallest]])
+        {
             smallest = left;
         }
-        if (right < size && key[heap[right]] < key[heap[smallest]]) {
+        if (right < size && key[heap[right]] < key[heap[smallest]])
+        {
             smallest = right;
         }
-        if (smallest == index) {
+        if (smallest == index)
+        {
             break;
         }
 
@@ -69,7 +81,8 @@ void MinHeap::siftDown(int index) {
     }
 }
 
-void MinHeap::insert(const int v, const long long k) {
+void MinHeap::insert(const int v, const long long k)
+{
     assert(!contains(v));
 
     key[v] = k;
@@ -78,7 +91,8 @@ void MinHeap::insert(const int v, const long long k) {
     siftUp(pos[v]);
 }
 
-int MinHeap::extractMin() {
+int MinHeap::extractMin()
+{
     assert(!empty());
 
     const int top = heap[0];
@@ -89,14 +103,16 @@ int MinHeap::extractMin() {
     heap.pop_back();
     pos[top] = -1;
 
-    if (!heap.empty()) {
+    if (!heap.empty())
+    {
         siftDown(0);
     }
 
     return top;
 }
 
-void MinHeap::decreaseKey(const int v, const long long k) {
+void MinHeap::decreaseKey(const int v, const long long k)
+{
     assert(contains(v));
     assert(k <= key[v]);
 
@@ -104,9 +120,11 @@ void MinHeap::decreaseKey(const int v, const long long k) {
     siftUp(pos[v]);
 }
 
-void MinHeap::clear() {
+void MinHeap::clear()
+{
     // Only visit vertices still in the heap, not all n vertices.
-    for (const int v : heap) {
+    for (const int v : heap)
+    {
         pos[v] = -1;
     }
 
