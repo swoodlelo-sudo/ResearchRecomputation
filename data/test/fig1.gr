@@ -1,5 +1,4 @@
-// The first test for graph  
-c Figure 1 test graph: S=1 A=2 B=3 C=4
+c The first test for graph figure 1 which looks like,  S=1 A=2 B=3 C=4
 p sp 4 8
 a 1 2 1
 a 2 1 1
