@@ -71,5 +71,8 @@ Testing/
 data/raw/*.gr
 data/raw/*.gz
 
+# batch update files, too big for GitHub, kept with the CSVs
+data/batches/
+
 # compiled program
 build/

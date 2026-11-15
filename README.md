@@ -20,3 +20,7 @@ g++ -std=c++17 -O2 -Wall -Wextra src/tst_Dijkstra.cpp src/Dijkstra.cpp src/Graph
 For the validator
 g++ -std=c++17 -O2 -Wall -Wextra src/tst_validator.cpp src/Validator.cpp src/Dijkstra.cpp src/Graph.cpp src/MinHeap.cpp -o build/tst_validator.exe
 ./build/tst_validator.exe
+
+For BtachGen
+g++ -std=c++17 -O2 -Wall -Wextra src/tst_BatchGen.cpp src/BatchGen.cpp src/Graph.cpp -o build/tst_BatchGen.exe
+./build/tst_BatchGen.exe
