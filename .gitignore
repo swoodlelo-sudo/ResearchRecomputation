@@ -70,6 +70,8 @@ Testing/
 # Florida road network download, too big for GitHub
 data/raw/*.gr
 data/raw/*.gz
+data/raw/*.g
+/data/graphs/*.txt
 
 # batch update files, too big for GitHub, kept with the CSVs
 data/batches/
