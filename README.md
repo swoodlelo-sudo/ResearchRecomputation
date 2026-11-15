@@ -12,3 +12,6 @@ for the test of mini heap befor dijkjstra quality check
 g++ -std=c++17 -O2 -Wall -Wextra src/tst_MinHeap.cpp src/MinHeap.cpp -o build/tst_MinHeap.exe
 ./build/tst_Minheap.exe 
 
+For the test on Dijkstra 
+g++ -std=c++17 -O2 -Wall -Wextra src/tst_Dijkstra.cpp src/Dijkstra.cpp src/Graph.cpp src/MinHeap.cpp -o build/tst_Dijkstra.exe
+./build/tst_Dijkstra.exe
