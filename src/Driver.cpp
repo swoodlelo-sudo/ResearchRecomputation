@@ -491,11 +491,6 @@ std::string runSequence(const Graph& original,
         return "OUT_OF_MEMORY";
     }
 }
-auto start = Clock::now();
-
-// Apply batch and run the selected method.
-
-auto end = Clock::now();
 
 // main 
 

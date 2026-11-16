@@ -32,3 +32,29 @@ g++ -std=c++17 -O2 -Wall -Wextra src/tst_GraphPrep.cpp src/GraphPrep.cpp src/Gra
 For DD
 g++ -std=c++17 -O2 -Wall -Wextra src/run_GraphPrep.cpp src/GraphPrep.cpp src/Graph.cpp src/Dijkstra.cpp src/MinHeap.cpp -o build/run_GraphPrep.exe
 ./build/run_GraphPrep.exe
+
+Real batch file  test
+g++ -std=c++17 -O2 -Wall -Wextra src/run_BatchGen.cpp src/BatchGen.cpp src/Graph.cpp -o build/run_BatchGen.exe
+./build/run_BatchGen.exe
+
+Builds Driver
+g++ -std=c++17 -O2 -Wall -Wextra src/Driver.cpp src/DDFLPD_WL.cpp src/DDFLPD.cpp src/Dijkstra.cpp src/Validator.cpp src/BatchGen.cpp src/Graph.cpp src/MinHeap.cpp -o build/Driver.exe -lpsapi
+
+just for testing 
+git add .
+git commit -m "batch generation program, experiment driver, README run commands"
+git push
+git status
+$h = git rev-parse --short HEAD
+
+Before every driver run: commit so the tree is clean, then save the hash
+git status
+$h = git rev-parse --short HEAD
+
+Pilot runs
+1. Pipeline check:
+./build/Driver.exe 10000 pilot $h 2> Results/log_NW_10000_pilot.txt
+./build/Driver.exe 30000 final $h 2> Results/log_NW_30000_final.txt
+./build/Driver.exe 90000 final $h 2> Results/log_NW_90000_final.txt
+./build/Driver.exe 270000 final $h 2> Results/log_NW_270000_final.txt
+./build/Driver.exe 810000 final $h 2> Results/log_NW_810000_final.txt
