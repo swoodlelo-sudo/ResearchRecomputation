@@ -1,8 +1,8 @@
 Compiler: 14.2.0
 Flags: -std=c++17 -O2 -Wall -Wextra
-Commit: 900efb2
+Commit: a95dec6
 N: 10000
 Mode: pilot
 Graph: NW_10000.txt
-PeakWorkingSetBytes: 9887744
+PeakWorkingSetBytes: 9793536
 PeakWorkingSetGiB: 0.009
