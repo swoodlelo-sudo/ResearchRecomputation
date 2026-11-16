@@ -35,7 +35,7 @@ struct BatchSequence{
 };
 
 // Reads a saved batch file back into sequence and checks it.
-//
+
 // Structure checks:
 //     the header has m > 0 and exactly 30 batches
 //     the 30 stored codes are only 1, 10, or 100, with 10 of each
@@ -44,12 +44,12 @@ struct BatchSequence{
 //     each batch's k matches k = max(1, floor(p * m + 0.5))
 //     edge IDs are in range and strictly increasing within a batch,
 //     which means sorted and distinct
-//
+
 // Weight checks:
 //     every weight is positive and newWeight is twice oldWeight
 //     when an edge appears again, its oldWeight must equal the newWeight
 //     from its previous appearance in the sequence
-//
+
 // This creates the batches that each method will receive in the experiments.
 // It works on a local copy of the weights, so the original graph is unchanged.
 // Later batches use the weights left by earlier batches in the sequence.
