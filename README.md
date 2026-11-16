@@ -62,3 +62,10 @@ Pilot runs
 ./build/Driver.exe 90000 final $h 2> Results/log_NW_90000_final.txt
 ./build/Driver.exe 270000 final $h 2> Results/log_NW_270000_final.txt
 ./build/Driver.exe 810000 final $h 2> Results/log_NW_810000_final.txt
+
+This is for Pilot runs with count 
+g++ -std=c++17 -O2 -Wall -Wextra src/run_Replay.cpp src/Replay.cpp src/DDFLPD_WL.cpp src/DDFLPD.cpp src/Dijkstra.cpp src/Validator.cpp src/BatchGen.cpp src/Graph.cpp src/MinHeap.cpp -o build/run_Replay.exe
+./build/run_Replay.exe 10000 pilot $h 2> Results/log_replay_NW_10000_pilot.txt
+Import-Csv Results\wtotal_NW_10000_pilot.csv | Group-Object outcome | Select-Object Name, Count
+./build/run_Replay.exe 810000 pilot $h 2> Results/log_replay_NW_810000_pilot.txt
+Import-Csv Results\wtotal_NW_810000_pilot.csv | Group-Object outcome | Select-Object Name, Count

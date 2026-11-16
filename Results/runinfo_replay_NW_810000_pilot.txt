@@ -1,0 +1,6 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: a95dec6
+N: 810000
+Mode: pilot
+Graph: NW_810000.txt
