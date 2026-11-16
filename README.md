@@ -46,14 +46,12 @@ Builds the cuts in the dataset
 To see the results from the batches in a file in results 
 Get-FileHash data\batches\NW_*.txt -Algorithm SHA256 | Format-Table Hash, Path -AutoSize | Out-File Results\batch_manifest.txt -Width 300
 
-just for testing 
-git add .
-git commit -m "batch generation program, experiment driver, README run commands"
-git push
-git status
-$h = git rev-parse --short HEAD
+testing for dev
 
-Before every driver run: commit so the tree is clean, then save the hash
+$h = git rev-parse --short HEAD
+$h
+
+Before every driver run commit so the tree is clean then save the hash
 git status
 $h = git rev-parse --short HEAD
 
