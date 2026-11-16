@@ -33,12 +33,18 @@ For DD
 g++ -std=c++17 -O2 -Wall -Wextra src/run_GraphPrep.cpp src/GraphPrep.cpp src/Graph.cpp src/Dijkstra.cpp src/MinHeap.cpp -o build/run_GraphPrep.exe
 ./build/run_GraphPrep.exe
 
-Real batch file  test
+Real batch file  build
 g++ -std=c++17 -O2 -Wall -Wextra src/run_BatchGen.cpp src/BatchGen.cpp src/Graph.cpp -o build/run_BatchGen.exe
 ./build/run_BatchGen.exe
 
 Builds Driver
 g++ -std=c++17 -O2 -Wall -Wextra src/Driver.cpp src/DDFLPD_WL.cpp src/DDFLPD.cpp src/Dijkstra.cpp src/Validator.cpp src/BatchGen.cpp src/Graph.cpp src/MinHeap.cpp -o build/Driver.exe -lpsapi
+
+Builds the cuts in the dataset
+./build/run_BatchGen.exe
+
+To see the results from the batches in a file in results 
+Get-FileHash data\batches\NW_*.txt -Algorithm SHA256 | Format-Table Hash, Path -AutoSize | Out-File Results\batch_manifest.txt -Width 300
 
 just for testing 
 git add .
