@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: f631aef
+N: 30000
+Mode: pilot
+Graph: CAL_30000.txt
+PeakWorkingSetBytes: 16506880
+PeakWorkingSetGiB: 0.015
