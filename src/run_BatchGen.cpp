@@ -16,7 +16,7 @@ int main() {
     for (int N : sizes) {
         Graph graph;
         const std::string graphFile =
-            "data/graphs/CAL_" + std::to_string(N) + ".txt";
+            "data/graphs/NE_" + std::to_string(N) + ".txt";
 
         if (!graph.load(graphFile)) {
             std::cerr << "Could not load " << graphFile << '\n';
@@ -34,7 +34,7 @@ int main() {
             }
 
             const std::string batchFile =
-                "data/batches/CAL_" + std::to_string(N) +
+                "data/batches/NE_" + std::to_string(N) +
                 "_seed" + std::to_string(seed) + ".txt";
 
             if (!BatchGenerator::save(sequence, batchFile)) {
