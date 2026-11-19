@@ -1,0 +1,6 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 0b09d4d
+N: 810000
+Mode: pilot
+Graph: NE_810000.txt

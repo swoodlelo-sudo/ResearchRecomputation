@@ -72,8 +72,6 @@ Import-Csv Results\wtotal_NW_810000_pilot.csv | Group-Object outcome | Select-Ob
 
 
 
-NW is already prepped and piloted, so it starts at the final runs.
-1.  Check that the repo is clean. It should say working tree clean.
 2. Run to move each dtaset into ther own folder bc did frst on acc
 New-Item -ItemType Directory Results\early_bb9940a
 Get-ChildItem Results -Filter "*NW_*_final*"
@@ -97,6 +95,56 @@ foreach ($N in 10000,30000,90000,270000,810000) {
 git add Results
 git commit -m "Final runs and replays NW 10k-810k"
 git push
+
+For the Cal Dat Set
+1.(me only) move datset
+Move-Item "$Home\Downloads\USA-road-t.CAL.gr.gz" data\raw\
+2. (me only) unzip n test
+$in=[IO.File]::OpenRead("$PWD\USA-road-t.CAL.gr.gz"); $gz=New-Object IO.Compression.GZipStream($in,[IO.Compression.CompressionMode]::Decompress); $out=[IO.File]::Create("$PWD\USA-road-t.CAL.gr"); $gz.CopyTo($out); $out.Close(); $gz.Close(); $in.Close()
+3. (me only) show where need to change file name to match \Projects\ResearchRecomputation> Select-String -Path src\run_GraphPrep.cpp,src\run_BatchGen.cpp,src\Driver.cpp,src\run_Replay.cpp -Pattern "NW" -CaseSensitive
+4.chnage fields
+5. compile
+g++ -std=c++17 -O2 -Wall -Wextra src/run_GraphPrep.cpp src/GraphPrep.cpp src/Graph.cpp src/Dijkstra.cpp src/MinHeap.cpp -o build/run_GraphPrep.exe
+g++ -std=c++17 -O2 -Wall -Wextra src/run_BatchGen.cpp src/BatchGen.cpp src/Graph.cpp -o build/run_BatchGen.exe
+g++ -std=c++17 -O2 -Wall -Wextra src/Driver.cpp src/DDFLPD_WL.cpp src/DDFLPD.cpp src/Dijkstra.cpp src/Validator.cpp src/BatchGen.cpp src/Graph.cpp src/MinHeap.cpp -o build/Driver.exe -lpsapi
+g++ -std=c++17 -O2 -Wall -Wextra src/run_Replay.cpp src/Replay.cpp src/DDFLPD_WL.cpp src/DDFLPD.cpp src/Dijkstra.cpp src/Validator.cpp src/BatchGen.cpp src/Graph.cpp src/MinHeap.cpp -o build/run_Replay.exe
+6. Prep Graphs ./build/run_GraphPrep.exe | Tee-Object Results\prep_CAL.txt
+Outcome
+Arc lines: 4657742
+Self-loops: 0
+Merged duplicates: 2342520
+Unique undirected edges: 2315222
+Source component size: 1890815
+N=10000 m=11685
+N=30000 m=36160
+N=90000 m=112332
+N=270000 m=337688
+N=810000 m=1006364
+7. Make Batches
+./build/run_BatchGen.exe | Tee-Object Results\batchgen_CAL.txt
+8. checksum
+9. push chnages
+git commit -m "CAL graph prep and batches"
+git push
+$h = git rev-parse --short HEAD
+$h
+10 . Run pilot
+foreach ($N in 10000,30000,90000,270000,810000) {
+  ./build/Driver.exe $N pilot $h 2> "Results/log_CAL_${N}_pilot.txt"
+  Import-Csv "Results\timed_CAL_${N}_pilot.csv" | Group-Object outcome | Select-Object Name, Count
+}
+./build/run_Replay.exe 10000 pilot $h 2> Results/log_replay_CAL_10000_pilot.txt
+./build/run_Replay.exe 810000 pilot $h 2> Results/log_replay_CAL_810000_pilot.txt
+11. save pilot
+
+12. run final run
+$h = git rev-parse --short HEAD
+$h
+foreach ($N in 10000,30000,90000,270000,810000) {
+  ./build/Driver.exe $N final $h 2> "Results/log_CAL_${N}_final.txt"
+  ./build/run_Replay.exe $N final $h 2> "Results/log_replay_CAL_${N}_final.txt"
+}
+13.scheck and post
 
 
 
