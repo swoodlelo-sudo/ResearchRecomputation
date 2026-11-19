@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 2742039
+N: 270000
+Mode: final
+Graph: CAL_270000.txt
+PeakWorkingSetBytes: 115179520
+PeakWorkingSetGiB: 0.107
