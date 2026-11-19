@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 985afde
+N: 270000
+Mode: final
+Graph: NW_270000.txt
+PeakWorkingSetBytes: 110743552
+PeakWorkingSetGiB: 0.103

@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 985afde
+N: 10000
+Mode: final
+Graph: NW_10000.txt
+PeakWorkingSetBytes: 10579968
+PeakWorkingSetGiB: 0.010

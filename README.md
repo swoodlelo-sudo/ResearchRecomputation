@@ -69,3 +69,35 @@ g++ -std=c++17 -O2 -Wall -Wextra src/run_Replay.cpp src/Replay.cpp src/DDFLPD_WL
 Import-Csv Results\wtotal_NW_10000_pilot.csv | Group-Object outcome | Select-Object Name, Count
 ./build/run_Replay.exe 810000 pilot $h 2> Results/log_replay_NW_810000_pilot.txt
 Import-Csv Results\wtotal_NW_810000_pilot.csv | Group-Object outcome | Select-Object Name, Count
+
+
+
+NW is already prepped and piloted, so it starts at the final runs.
+1.  Check that the repo is clean. It should say working tree clean.
+2. Run to move each dtaset into ther own folder bc did frst on acc
+New-Item -ItemType Directory Results\early_bb9940a
+Get-ChildItem Results -Filter "*NW_*_final*"
+Get-ChildItem Results -Filter "*NW_30000_final*" | ForEach-Object { git mv $_.FullName Results\early_bb9940a\ }
+Get-ChildItem Results -Filter "*NW_90000_final*" | ForEach-Object { git mv $_.FullName Results\early_bb9940a\ }
+git push
+3.  Run the final runs and replays for all five sizes. The 810k size can take about an hour.
+$h = git rev-parse --short HEAD
+foreach ($N in 10000,30000,90000,270000,810000) {
+  ./build/Driver.exe $N final $h 2> "Results/log_NW_${N}_final.txt"
+  ./build/run_Replay.exe $N final $h 2> "Results/log_replay_NW_${N}_final.txt"
+}
+5.  Check each size. Only PASS should show, 3780 in the timed file and 630 in the replay file.
+ foreach ($N in 10000,30000,90000,270000,810000) { 
+    "--- $N ---" 
+    Import-Csv "Results\timed_NW_${N}_final.csv" | Group-Object outcome | Select-Object Name, Count 
+    Import-Csv "Results\wtotal_NW_${N}_final.csv" | Group-Object outcome | Select-Object Name, Count 
+ }
+
+6.  Save and push.
+git add Results
+git commit -m "Final runs and replays NW 10k-810k"
+git push
+
+
+
+

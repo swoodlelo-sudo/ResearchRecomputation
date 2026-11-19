@@ -1,0 +1,6 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 985afde
+N: 810000
+Mode: final
+Graph: NW_810000.txt
