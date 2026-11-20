@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
 
     std::string label = (mode == "pilot") ? "PILOT" : "FINAL";
 
-    const std::string stem = "NE_" + std::to_string(N);
+    const std::string stem = "LKS_" + std::to_string(N);
     const std::string graphFile = stem + ".txt";
 
     // Load the original graph

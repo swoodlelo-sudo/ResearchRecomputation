@@ -145,6 +145,22 @@ foreach ($N in 10000,30000,90000,270000,810000) {
   ./build/run_Replay.exe $N final $h 2> "Results/log_replay_CAL_${N}_final.txt"
 }
 13.scheck and post
+14.NE
+$h = git rev-parse --short HEAD
+$h
+foreach ($N in 10000,30000,90000,270000,810000) {
+  ./build/Driver.exe $N final $h 2> "Results/log_NE_${N}_final.txt"
+  ./build/run_Replay.exe $N final $h 2> "Results/log_replay_NE_${N}_final.txt"
+}
+
+foreach ($N in 10000,30000,90000,270000,810000) {
+  "--- $N ---"
+  Import-Csv "Results\timed_NE_${N}_final.csv" | Group-Object outcome | Select-Object Name, Count
+  Import-Csv "Results\wtotal_NE_${N}_final.csv" | Group-Object outcome | Select-Object Name, Count
+}
+git add Results
+git commit -m "Final runs and replays NE 10k-810k"
+git push
 
 
 

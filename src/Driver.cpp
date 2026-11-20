@@ -526,7 +526,7 @@ int main(int argc, char* argv[]) {
 
     std::filesystem::create_directories("Results");
 
-    const std::string stem = "NE_" + std::to_string(N);
+    const std::string stem = "LKS_" + std::to_string(N);
     const std::string graphFile = stem + ".txt";
 
     Graph original;

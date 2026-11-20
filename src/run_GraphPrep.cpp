@@ -15,7 +15,7 @@ int main() {
     Graph full;
     PrepStats stats;
 
-    if (!GraphPrep::convertDimacs("data/raw/USA-road-t.NE.gr", full, stats)) {
+    if (!GraphPrep::convertDimacs("data/raw/USA-road-t.LKS.gr", full, stats)) {
         std::cerr << "Could not convert the DIMACS file.\n";
         return 1;
     }
@@ -61,7 +61,7 @@ int main() {
             return 1;
         }
 
-        const std::string stem = "data/graphs/NE_" + std::to_string(N);
+        const std::string stem = "data/graphs/LKS_" + std::to_string(N);
 
         if (!cut.save(stem + ".txt") ||
             !GraphPrep::saveMapping(mapping, stem + "_map.txt")) {
