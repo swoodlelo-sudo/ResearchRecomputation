@@ -1,0 +1,6 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 4a4ba62
+N: 810000
+Mode: pilot
+Graph: LKS_810000.txt

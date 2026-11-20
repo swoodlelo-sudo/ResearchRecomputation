@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 4a4ba62
+N: 30000
+Mode: pilot
+Graph: LKS_30000.txt
+PeakWorkingSetBytes: 16355328
+PeakWorkingSetGiB: 0.015
