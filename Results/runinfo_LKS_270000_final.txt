@@ -1,0 +1,8 @@
+Compiler: 14.2.0
+Flags: -std=c++17 -O2 -Wall -Wextra
+Commit: 9ca417b
+N: 270000
+Mode: final
+Graph: LKS_270000.txt
+PeakWorkingSetBytes: 113102848
+PeakWorkingSetGiB: 0.105
